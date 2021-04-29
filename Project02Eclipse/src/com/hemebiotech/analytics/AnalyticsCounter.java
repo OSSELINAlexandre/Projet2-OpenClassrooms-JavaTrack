@@ -4,10 +4,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -37,13 +39,25 @@ public class AnalyticsCounter {
 	 * from the Database.
 	 */
 	public Map<String, Integer> dicoOfSymptoms;
+	public Path path;
+	public ReadSymptomDataFromFile reader;
+	public WritingInFile writer;
 
 	/**
 	 * Constructor of the AnalyticsCounter class.
 	 * 
 	 */
 	public AnalyticsCounter() {
-		dicoOfSymptoms = new TreeMap<String, Integer>();
+		dicoOfSymptoms = new TreeMap<String, Integer>(new Comparator<String>() {
+		    public int compare(String o1, String o2) {
+		        return o1.toLowerCase().compareTo(o2.toLowerCase());
+		    }
+		});
+		
+		path = null;
+		reader = null;
+		writer = null;
+		
 	}
 
 	public Map<String, Integer> getDicoOfSymptoms() {
@@ -57,7 +71,8 @@ public class AnalyticsCounter {
 	 * @see ReadSymptomDataFromFile
 	 * @return the ordered dictionary with the symptom name and it's occurrences.
 	 */
-	public Map<String, Integer> generateResult(ArrayList<String> theData) {
+	public Map<String, Integer> sortFile() {
+		ArrayList<String> theData = (ArrayList<String>) reader.GetSymptoms();
 		for (String s : theData) {
 			if (dicoOfSymptoms.containsKey(s)) {
 				Integer newCount = dicoOfSymptoms.get(s);
@@ -70,23 +85,33 @@ public class AnalyticsCounter {
 		return dicoOfSymptoms;
 	}
 
-	public static void main(String args[]) throws Exception {
+	public void loadFile(String path) {
+		Path pathway = Paths.get("Project02Eclipse\\" + path);
+		reader = new ReadSymptomDataFromFile(pathway.toAbsolutePath().toString());
 
-		Path path = Paths.get("Project02Eclipse\\symptoms.txt");
-		AnalyticsCounter analyticsCounter = new AnalyticsCounter();
-		ReadSymptomDataFromFile readData = new ReadSymptomDataFromFile(path.toAbsolutePath().toString());
-
-		ArrayList<String> theData = (ArrayList<String>) readData.GetSymptoms();
-
-		analyticsCounter.generateResult(theData);
-
-		FileWriter writer = new FileWriter("result.out");
-
-		for (Map.Entry<String, Integer> kv : analyticsCounter.getDicoOfSymptoms().entrySet()) {
-
-			writer.write(kv.getKey() + "=" + kv.getValue() + "\n");
-		}
-
-		writer.close();
 	}
+
+	
+	public void writeData(String nameOfFile, String nameOfExpectedDestination)  {
+		
+		try {
+			writer = new WritingInFile(nameOfFile, nameOfExpectedDestination);
+
+			for (Map.Entry<String, Integer> kv : this.getDicoOfSymptoms().entrySet()) {
+				
+				writer.Write(kv.getKey() + "=" + kv.getValue() + "\n");
+			}
+			writer.close();
+			
+		} catch (IOException e1) {
+			System.out.println("Issue with the writing etc of file !");
+			e1.printStackTrace();
+		}
+		
+
+
+	}
+
+
+
 }
