@@ -4,31 +4,29 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class WritingInFile {
-	
-	
+
 	public FileWriter writer;
 	public String wantedDestination;
 	public String currentFileName;
-	
 
 	public WritingInFile(String nameOfFile, String expectedDestination) throws IOException {
 		super();
-		
+
 		currentFileName = nameOfFile;
 		wantedDestination = expectedDestination;
-		writer = new FileWriter( wantedDestination + currentFileName);	
+		writer = new FileWriter(wantedDestination + currentFileName);
 	}
-	
+
 	public void Write(String Message) throws IOException {
-		
+
 		writer.write(Message);
-		
+
 	}
 
 	public void close() throws IOException {
-		
+
 		writer.close();
-		
+
 	}
 
 	public FileWriter getWriter() {
@@ -39,12 +37,12 @@ public class WritingInFile {
 		this.writer = writer;
 	}
 
-	public String getPartOfThePath() {
+	public String getWantedDestination() {
 		return wantedDestination;
 	}
 
-	public void setPartOfThePath(String partOfThePath) {
-		this.wantedDestination = partOfThePath;
+	public void setWantedDestination(String wantedDestination) {
+		this.wantedDestination = wantedDestination;
 	}
 
 	public String getCurrentFileName() {
@@ -54,10 +52,5 @@ public class WritingInFile {
 	public void setCurrentFileName(String currentFileName) {
 		this.currentFileName = currentFileName;
 	}
-
-
-	
-	
-	
 
 }

@@ -38,8 +38,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 				}
 				reader.close();
 			} catch (IOException e) {
-				System.out.println("Couldn't load properly the file, please set it in the root directory.");
-				e.printStackTrace();
+				System.out.println("Couldn't load properly the file, please put the file database it in the Project02Eclipse directory.");
 			}
 		}
 

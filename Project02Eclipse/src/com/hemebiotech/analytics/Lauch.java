@@ -10,8 +10,8 @@ public class Lauch {
 		AnalyticsCounter analyticsCounter = new AnalyticsCounter();
 
 		analyticsCounter.loadFile("symptoms.txt");
-		analyticsCounter.sortFile();
-		analyticsCounter.writeData("results.out" , "Project02Eclipse\\src\\com\\hemebiotech\\analytics\\");
+		analyticsCounter.sortDataFromFile();
+		analyticsCounter.writeDataToFile("results.out" , "Project02Eclipse\\src\\com\\hemebiotech\\analytics\\");
 
 	}
 

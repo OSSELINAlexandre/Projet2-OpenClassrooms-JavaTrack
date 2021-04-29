@@ -64,14 +64,9 @@ public class AnalyticsCounter {
 		return dicoOfSymptoms;
 	}
 
-	/**
-	 * Constructor of the AnalyticsCounter class.
-	 * 
-	 * @param ArrayList<String> a Java List with all the data.
-	 * @see ReadSymptomDataFromFile
-	 * @return the ordered dictionary with the symptom name and it's occurrences.
-	 */
-	public Map<String, Integer> sortFile() {
+
+	
+	public Map<String, Integer> sortDataFromFile() {
 		ArrayList<String> theData = (ArrayList<String>) reader.GetSymptoms();
 		for (String s : theData) {
 			if (dicoOfSymptoms.containsKey(s)) {
@@ -92,7 +87,7 @@ public class AnalyticsCounter {
 	}
 
 	
-	public void writeData(String nameOfFile, String nameOfExpectedDestination)  {
+	public void writeDataToFile(String nameOfFile, String nameOfExpectedDestination)  {
 		
 		try {
 			writer = new WritingInFile(nameOfFile, nameOfExpectedDestination);
@@ -104,7 +99,7 @@ public class AnalyticsCounter {
 			writer.close();
 			
 		} catch (IOException e1) {
-			System.out.println("Issue with the writing etc of file !");
+			System.out.println("Issue with the writing of file !");
 			e1.printStackTrace();
 		}
 		
