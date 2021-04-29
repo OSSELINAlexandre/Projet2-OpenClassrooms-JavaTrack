@@ -23,6 +23,10 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 		this.filepath = filepath;
 	}
 
+	/**
+	 * 
+	 * @return an ArrayList of all the symptoms from the DataBase given.
+	 */
 	@Override
 	public List<String> GetSymptoms() {
 		ArrayList<String> result = new ArrayList<String>();
@@ -38,7 +42,8 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 				}
 				reader.close();
 			} catch (IOException e) {
-				System.out.println("Couldn't load properly the file, please put the file database it in the Project02Eclipse directory.");
+				System.out.println(
+						"Couldn't load properly the file, please put the file database it in the Project02Eclipse directory.");
 			}
 		}
 

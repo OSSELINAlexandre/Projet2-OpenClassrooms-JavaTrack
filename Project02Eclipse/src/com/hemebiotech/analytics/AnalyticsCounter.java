@@ -29,7 +29,7 @@ import java.util.TreeMap;
  * @see ReadSymptomDataFromFile
  * 
  * @author Alexandre OSSELIN
- * @version 1.1
+ * @version 1.4
  */
 
 public class AnalyticsCounter {
@@ -46,6 +46,9 @@ public class AnalyticsCounter {
 	/**
 	 * Constructor of the AnalyticsCounter class.
 	 * 
+	 * 
+	 * We set the comparator of the TreeMap to sort in alphabetical order the keys.
+	 * 
 	 */
 	public AnalyticsCounter() {
 		dicoOfSymptoms = new TreeMap<String, Integer>(new Comparator<String>() {
@@ -59,13 +62,25 @@ public class AnalyticsCounter {
 		writer = null;
 		
 	}
-
+	
+    /**
+     * A Map is used, as a Dictionary, in order to adpat to any new symptoms and any occurrences.
+     * 
+     * @return The class Map
+     * 
+     */
 	public Map<String, Integer> getDicoOfSymptoms() {
 		return dicoOfSymptoms;
 	}
 
 
 	
+    /**
+     * This method, given a list of symptoms, counts the occurrences of every symptoms.
+     * 
+     * @return The Map representing the data of the file given.
+     * 
+     */
 	public Map<String, Integer> sortDataFromFile() {
 		ArrayList<String> theData = (ArrayList<String>) reader.GetSymptoms();
 		for (String s : theData) {
@@ -80,13 +95,31 @@ public class AnalyticsCounter {
 		return dicoOfSymptoms;
 	}
 
+	
+    /**
+     * This method instantiate the ReadSymptomDataFromFile() class and find the path of the DataBase
+     * 
+     * 
+     * @param path is the name of the database file.
+     * 
+     * @see ReadSymptomDataFromFile()
+     * 
+     */
 	public void loadFile(String path) {
 		Path pathway = Paths.get("Project02Eclipse\\" + path);
 		reader = new ReadSymptomDataFromFile(pathway.toAbsolutePath().toString());
 
 	}
 
-	
+    /**
+     * This method will create a file given a name, to a given destination.
+     * 
+     * @param nameOfFile is the name that the clients wants to give to the output
+     * @param nameOfExpectedDestination is the destination path that the client want to store the result in
+     * 
+     * @see ReadSymptomDataFromFile()
+     * 
+     */
 	public void writeDataToFile(String nameOfFile, String nameOfExpectedDestination)  {
 		
 		try {
@@ -108,5 +141,7 @@ public class AnalyticsCounter {
 	}
 
 
+	
+	
 
 }
