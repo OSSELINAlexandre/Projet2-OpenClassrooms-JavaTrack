@@ -12,7 +12,7 @@ import java.util.Map;
  * can be.
  * 
  * @author Alexandre OSSELIN
- * @version 1.4.5
+ * @version 1.4.6
  */
 
 public class WritingInFile {
@@ -27,8 +27,6 @@ public class WritingInFile {
 	 * 
 	 */
 	public WritingInFile(String nameOfFile, String expectedDestination) {
-		super();
-
 		this.currentFileName = nameOfFile;
 		this.wantedDestination = expectedDestination;
 
@@ -38,34 +36,34 @@ public class WritingInFile {
 	 * Start the Writer
 	 * 
 	 * We instantiated the FileWriter class here.
+	 * @throws IOException 
 	 * 
 	 */
 	public void start(Map<String, Integer> map) {
 
+		FileWriter writer = null;
 		try {
-			FileWriter writer = new FileWriter(this.wantedDestination + this.currentFileName);
+			writer = new FileWriter(this.wantedDestination + this.currentFileName);
 
-			try {
-				for (Map.Entry<String, Integer> kv : map.entrySet()) {
+			for (Map.Entry<String, Integer> kv : map.entrySet()) {
 
-					writer.write(kv.getKey() + "=" + kv.getValue() + "\n");
-
-				}
-
-			} catch (Exception e) {
-				System.out.println(
-						"Couldn't write an entry of the dictionary into the file results in class in the WRITER method");
-			} finally {
-
-				writer.close();
+				writer.write(kv.getKey() + "=" + kv.getValue() + "\n");
 			}
 
-		} catch (Exception E) {
+			writer.close();
+
+		} catch (Exception e) {
+
 			System.out.println(
-					"Couldn't instantiate the FileWriter class in the WRITER method, there is an issue with the given path, or the name for the output file.");
-
+					"Couldn't write an entry of the dictionary into the file results in class in the WRITER method");
+		}finally {
+			
+			try {
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-
 	}
 
 }

@@ -34,51 +34,41 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 
 		if (this.filepath != null) {
 
-			if (!Paths.get("Project02Eclipse\\").toAbsolutePath().toString().equals(filepath)) { // Manage if empty
-																									// String
+			BufferedReader reader = null;
+
+			try {
+
+				reader = new BufferedReader(new FileReader(this.filepath));
+
+				String line = reader.readLine();
+
+				while (line != null) {
+
+					if (!line.equals("")) { // Manage if blank line in the file
+
+						result.add(line);
+					}
+
+					line = reader.readLine();
+				}
+
+				reader.close();
+
+			} catch (Exception E) {
+
+				System.out.println("Exception found in the database file, couldn't write to the List.");
+
+			} finally {
 
 				try {
-
-					BufferedReader reader = new BufferedReader(new FileReader(this.filepath));
-
-					try {
-
-						String line = reader.readLine();
-
-						while (line != null) {
-
-							if (!line.equals("")) { //Manage if blank line in the file
-
-								result.add(line);
-							}
-
-							line = reader.readLine();
-						}
-
-					} catch (Exception E) {
-
-						System.out.println("Exception found in the database file, couldn't write to the List.");
-
-					} finally {
-
-						reader.close();
-					}
+					reader.close();
 				} catch (IOException e) {
-
-					System.out.println(
-							"Couldn't load properly the file, please put the file database it in the Project02Eclipse directory.");
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			} else {
-
-				System.out.println("Please enter a name for the database. You set an empty string.");
-
 			}
 
-		} else {
-
-			System.out.println("The given path for the database is null");
 		}
-
 		return result;
 
 	}

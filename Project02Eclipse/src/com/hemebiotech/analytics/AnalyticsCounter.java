@@ -21,7 +21,7 @@ import java.util.TreeMap;
  * @see ReadSymptomDataFromFile
  * 
  * @author Alexandre OSSELIN
- * @version 1.4.5
+ * @version 1.4.6
  */
 
 public class AnalyticsCounter {
@@ -52,28 +52,6 @@ public class AnalyticsCounter {
 		});
 
 		this.theDataFromFile = new ArrayList<String>();
-	}
-
-	/**
-	 * Getter of the dictionary that categorized and count occurrences all the data
-	 * from file A Map is used, as a Dictionary, in order to adapt to any new
-	 * symptoms and any occurrences.
-	 * 
-	 * @return The class Map
-	 * 
-	 */
-	public Map<String, Integer> getDicoOfSymptoms() {
-		return this.dicoOfSymptoms;
-	}
-
-	/**
-	 * Getter of the List that saved all data from the database
-	 * 
-	 * @return theDataFromFile
-	 * 
-	 */
-	public ArrayList<String> getTheDataFromFile() {
-		return this.theDataFromFile;
 	}
 
 	/**
