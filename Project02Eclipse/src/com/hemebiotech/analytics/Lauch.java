@@ -13,7 +13,7 @@ import java.nio.file.Paths;
  * @see AnalyticsCounter
  * 
  * @author Alexandre OSSELIN
- * @version 1.4.2
+ * @version 1.4.4
  */
 
 public class Lauch {
@@ -21,10 +21,7 @@ public class Lauch {
 	public static void main(String args[]) throws Exception {
 
 		AnalyticsCounter analyticsCounter = new AnalyticsCounter();
-
-		analyticsCounter.loadFile("symptoms.txt");
-		analyticsCounter.sortDataFromFile();
-		analyticsCounter.writeDataToFile("results.out", "Project02Eclipse\\src\\com\\hemebiotech\\analytics\\");
+		analyticsCounter.start("symptoms.txt", "results.out");
 
 	}
 
