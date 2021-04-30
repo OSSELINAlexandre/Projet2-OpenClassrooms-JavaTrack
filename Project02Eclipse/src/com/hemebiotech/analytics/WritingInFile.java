@@ -6,11 +6,12 @@ import java.io.IOException;
 /**
  * 
  * This class write in the file. It is possible to get or set any variables (the
- * name of the file in which you write, or the path of it). It is a way to centralized all exception possible
- * and therefore to see exactly where the bug can be. F
+ * name of the file in which you write, or the path of it). It is a way to
+ * centralized all exception possible and therefore to see exactly where the bug
+ * can be. F
  * 
  * @author Alexandre OSSELIN
- * @version 1.4
+ * @version 1.4.3
  */
 
 public class WritingInFile {
@@ -23,6 +24,8 @@ public class WritingInFile {
 	 * Constructor of the class.
 	 * 
 	 * We instantiated the FileWriter class here.
+	 * 
+	 * @throws IOException
 	 */
 	public WritingInFile(String nameOfFile, String expectedDestination) throws IOException {
 		super();
@@ -30,10 +33,13 @@ public class WritingInFile {
 		currentFileName = nameOfFile;
 		wantedDestination = expectedDestination;
 		writer = new FileWriter(wantedDestination + currentFileName);
+
 	}
 
 	/**
 	 * Write in the file.
+	 * 
+	 * @throws IOException
 	 * 
 	 */
 	public void Write(String Message) throws IOException {
@@ -44,6 +50,8 @@ public class WritingInFile {
 
 	/**
 	 * Close the file.
+	 * 
+	 * @throws IOException
 	 * 
 	 */
 	public void close() throws IOException {

@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * Main class to lauch the application.
+ * Main class to launch the application.
  * 
  * Set the name of the DB in loadFile() Then, call the sortDataFromFile()
  * Finally, choose a name of output and a destination Path in writeDataToFile();
@@ -13,7 +13,7 @@ import java.nio.file.Paths;
  * @see AnalyticsCounter
  * 
  * @author Alexandre OSSELIN
- * @version 1.4
+ * @version 1.4.2
  */
 
 public class Lauch {
