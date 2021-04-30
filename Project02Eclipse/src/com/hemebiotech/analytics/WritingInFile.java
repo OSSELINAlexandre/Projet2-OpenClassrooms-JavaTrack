@@ -9,25 +9,24 @@ import java.util.Map;
  * This class write in the file. It is possible to get or set any variables (the
  * name of the file in which you write, or the path of it). It is a way to
  * centralized all exception possible and therefore to see exactly where the bug
- * can be. F
+ * can be.
  * 
  * @author Alexandre OSSELIN
- * @version 1.4.4
+ * @version 1.4.5
  */
 
 public class WritingInFile {
 
-	public String wantedDestination;
-	public String currentFileName;
+	private String wantedDestination;
+	private String currentFileName;
 
 	/**
 	 * Constructor of the class.
 	 * 
 	 * We instantiated the FileWriter class here.
 	 * 
-	 * @throws IOException
 	 */
-	public WritingInFile(String nameOfFile, String expectedDestination) throws IOException {
+	public WritingInFile(String nameOfFile, String expectedDestination) {
 		super();
 
 		this.currentFileName = nameOfFile;
@@ -36,47 +35,36 @@ public class WritingInFile {
 	}
 
 	/**
-	 * Getter of the Path
+	 * Start the Writer
 	 * 
-	 * @return the String showing the Path of the result file
-	 */
-	public String getWantedDestination() {
-		return this.wantedDestination;
-	}
-
-	/**
-	 * Setter of the destination for the result.
-	 */
-	public void setWantedDestination(String wantedDestination) {
-		this.wantedDestination = wantedDestination;
-	}
-
-	/**
-	 * Getter of the result file name
+	 * We instantiated the FileWriter class here.
 	 * 
-	 * @return the name of the result file.
 	 */
-	public String getCurrentFileName() {
-		return this.currentFileName;
-	}
+	public void start(Map<String, Integer> map) {
 
-	/**
-	 * Setter of the result file name.
-	 */
-	public void setCurrentFileName(String currentFileName) {
-		this.currentFileName = currentFileName;
-	}
+		try {
+			FileWriter writer = new FileWriter(this.wantedDestination + this.currentFileName);
 
-	public void start(Map<String, Integer> map) throws IOException {
+			try {
+				for (Map.Entry<String, Integer> kv : map.entrySet()) {
 
-		FileWriter writer = new FileWriter(this.wantedDestination + this.currentFileName);
+					writer.write(kv.getKey() + "=" + kv.getValue() + "\n");
 
-		for (Map.Entry<String, Integer> kv : map.entrySet()) {
+				}
 
-			writer.write(kv.getKey() + "=" + kv.getValue() + "\n");
+			} catch (Exception e) {
+				System.out.println(
+						"Couldn't write an entry of the dictionary into the file results in class in the WRITER method");
+			} finally {
+
+				writer.close();
+			}
+
+		} catch (Exception E) {
+			System.out.println(
+					"Couldn't instantiate the FileWriter class in the WRITER method, there is an issue with the given path, or the name for the output file.");
+
 		}
-
-		writer.close();
 
 	}
 

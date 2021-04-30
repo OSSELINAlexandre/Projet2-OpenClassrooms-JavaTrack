@@ -3,6 +3,7 @@ package com.hemebiotech.analytics;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,22 +33,53 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 		ArrayList<String> result = new ArrayList<String>();
 
 		if (this.filepath != null) {
-			try {
-				BufferedReader reader = new BufferedReader(new FileReader(this.filepath));
-				String line = reader.readLine();
 
-				while (line != null) {
-					result.add(line);
-					line = reader.readLine();
+			if (!Paths.get("Project02Eclipse\\").toAbsolutePath().toString().equals(filepath)) { // Manage if empty
+																									// String
+
+				try {
+
+					BufferedReader reader = new BufferedReader(new FileReader(this.filepath));
+
+					try {
+
+						String line = reader.readLine();
+
+						while (line != null) {
+
+							if (!line.equals("")) { //Manage if blank line in the file
+
+								result.add(line);
+							}
+
+							line = reader.readLine();
+						}
+
+					} catch (Exception E) {
+
+						System.out.println("Exception found in the database file, couldn't write to the List.");
+
+					} finally {
+
+						reader.close();
+					}
+				} catch (IOException e) {
+
+					System.out.println(
+							"Couldn't load properly the file, please put the file database it in the Project02Eclipse directory.");
 				}
-				reader.close();
-			} catch (IOException e) {
-				System.out.println(
-						"Couldn't load properly the file, please put the file database it in the Project02Eclipse directory.");
+			} else {
+
+				System.out.println("Please enter a name for the database. You set an empty string.");
+
 			}
+
+		} else {
+
+			System.out.println("The given path for the database is null");
 		}
 
 		return result;
-	}
 
+	}
 }
