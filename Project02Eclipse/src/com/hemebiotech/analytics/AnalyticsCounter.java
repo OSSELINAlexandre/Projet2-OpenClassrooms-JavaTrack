@@ -76,7 +76,7 @@ public class AnalyticsCounter {
 	 * 
 	 */
 	public Map<String, Integer> getDicoOfSymptoms() {
-		return dicoOfSymptoms;
+		return this.dicoOfSymptoms;
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class AnalyticsCounter {
 	 * 
 	 */
 	public Path getPathOfDatabase() {
-		return pathOfDatabase;
+		return this.pathOfDatabase;
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class AnalyticsCounter {
 	 * 
 	 */
 	public ArrayList<String> getTheDataFromFile() {
-		return theDataFromFile;
+		return this.theDataFromFile;
 	}
 
 	/**
@@ -168,8 +168,8 @@ public class AnalyticsCounter {
 	public void loadFile_READER(String nameOfDb) {
 
 		this.pathOfDatabase = Paths.get("Project02Eclipse\\" + nameOfDb);
-		ReadSymptomDataFromFile reader = new ReadSymptomDataFromFile(pathOfDatabase.toAbsolutePath().toString());
-		theDataFromFile = (ArrayList<String>) reader.GetSymptoms();
+		ReadSymptomDataFromFile reader = new ReadSymptomDataFromFile(this.pathOfDatabase.toAbsolutePath().toString());
+		this.theDataFromFile = (ArrayList<String>) reader.GetSymptoms();
 
 	}
 
@@ -182,16 +182,16 @@ public class AnalyticsCounter {
 	 */
 	public Map<String, Integer> sortDataFromFile_SORTER() {
 
-		for (String s : theDataFromFile) {
-			if (dicoOfSymptoms.containsKey(s)) {
-				Integer newCount = dicoOfSymptoms.get(s);
+		for (String s : this.theDataFromFile) {
+			if (this.dicoOfSymptoms.containsKey(s)) {
+				Integer newCount = this.dicoOfSymptoms.get(s);
 				newCount++;
-				dicoOfSymptoms.put(s, newCount);
+				this.dicoOfSymptoms.put(s, newCount);
 			} else {
-				dicoOfSymptoms.put(s, 1);
+				this.dicoOfSymptoms.put(s, 1);
 			}
 		}
-		return dicoOfSymptoms;
+		return this.dicoOfSymptoms;
 	}
 
 	/**
