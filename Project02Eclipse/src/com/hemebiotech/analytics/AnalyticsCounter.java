@@ -19,17 +19,17 @@ import java.util.TreeMap;
  * <b>A solution</b>
  * <p>
  * What changed ?
- * <ul>
- * <li>The symptoms are into a Dictionary</li>
- * <li>To obtain the result you want in the output file, you just have to call
- * the method in ReadSymptomDataFromFile</li>
- * </ul>
  * </p>
+ * <p>
+ * Autonomous class that can read data from a file in the directory, and produce
+ * a result file</li>
+ * </p>
+ * 
  * 
  * @see ReadSymptomDataFromFile
  * 
  * @author Alexandre OSSELIN
- * @version 1.4.2
+ * @version 1.4.4
  */
 
 public class AnalyticsCounter {
@@ -43,17 +43,11 @@ public class AnalyticsCounter {
 	 * The Path to the database.
 	 */
 	public Path pathOfDatabase;
+
 	/**
-	 * The class in charge of the service.
+	 * The ArrayList that save all the data from the given Database.
 	 */
-	/**
-	 * 
-	 */
-	public ReadSymptomDataFromFile reader;
-	/**
-	 * my reader class to centralize all possible exception
-	 */
-	public WritingInFile writer;
+	public ArrayList<String> theDataFromFile;
 
 	/**
 	 * Constructor of the AnalyticsCounter class.
@@ -63,21 +57,20 @@ public class AnalyticsCounter {
 	 * 
 	 */
 	public AnalyticsCounter() {
-		dicoOfSymptoms = new TreeMap<String, Integer>(new Comparator<String>() {
+		this.dicoOfSymptoms = new TreeMap<String, Integer>(new Comparator<String>() {
 			public int compare(String o1, String o2) {
 				return o1.toLowerCase().compareTo(o2.toLowerCase());
 			}
 		});
 
-		pathOfDatabase = null;
-		reader = null;
-		writer = null;
-
+		this.pathOfDatabase = null;
+		this.theDataFromFile = new ArrayList<String>();
 	}
 
 	/**
-	 * A Map is used, as a Dictionary, in order to adapt to any new symptoms and any
-	 * occurrences.
+	 * Getter of the dictionary that categorized and count occurrences all the data
+	 * from file A Map is used, as a Dictionary, in order to adapt to any new
+	 * symptoms and any occurrences.
 	 * 
 	 * @return The class Map
 	 * 
@@ -87,32 +80,109 @@ public class AnalyticsCounter {
 	}
 
 	/**
-	 * This method instantiate the ReadSymptomDataFromFile() class and find the path
-	 * of the DataBase
+	 * Getter of the path of the database where the information is saved
 	 * 
-	 * 
-	 * @param path is the name of the database file.
-	 * 
-	 * @see ReadSymptomDataFromFile()
+	 * @return pathOfDatabase
 	 * 
 	 */
-	public void loadFile(String path) {
-		this.pathOfDatabase = Paths.get("Project02Eclipse\\" + path);
-		reader = new ReadSymptomDataFromFile(pathOfDatabase.toAbsolutePath().toString());
+	public Path getPathOfDatabase() {
+		return pathOfDatabase;
+	}
+
+	/**
+	 * Setter of the path of the database where the information is saved
+	 * 
+	 * @return pathOfDatabase
+	 * 
+	 */
+	public void setPathOfDatabase(Path pathOfDatabase) {
+		this.pathOfDatabase = pathOfDatabase;
+	}
+
+	/**
+	 * Getter of the List that saved all data from the database
+	 * 
+	 * @return theDataFromFile
+	 * 
+	 */
+	public ArrayList<String> getTheDataFromFile() {
+		return theDataFromFile;
+	}
+
+	/**
+	 * Setter of the List that saved all data from the database
+	 * 
+	 * @return pathOfDatabase
+	 * 
+	 */
+	public void setTheDataFromFile(ArrayList<String> theDataFromFile) {
+		this.theDataFromFile = theDataFromFile;
+	}
+
+	/**
+	 * Setter of the dictionary that categorized and count occurrences all the data
+	 * from file
+	 * 
+	 * @return dicoOfSymptoms
+	 * 
+	 */
+	public void setDicoOfSymptoms(Map<String, Integer> dicoOfSymptoms) {
+		this.dicoOfSymptoms = dicoOfSymptoms;
+	}
+
+	/**
+	 * Method called to make the whole system autonomous.
+	 * 
+	 * First the READER | Second the SORTER | Third the WRITER
+	 * 
+	 * 
+	 * @see loadFile()
+	 * @see sortDataFromFile()
+	 * @see writeDataToFile();
+	 * 
+	 * 
+	 * @param the name of the database where the information is saved
+	 * @param the wanted name for the file output.
+	 * 
+	 */
+	public void start(String dataBaseNameFile, String resultFileName) {
+		this.loadFile_READER(dataBaseNameFile);
+		this.sortDataFromFile_SORTER();
+		try {
+			this.writeDataToFile_WRITER(resultFileName, "Project02Eclipse\\src\\com\\hemebiotech\\analytics\\");
+		} catch (IOException e) {
+			System.out.println("Issue while trying to write in the file.");
+		}
 
 	}
 
 	/**
-	 * This method, given a list of symptoms, counts the occurrences of every
-	 * symptoms. The comparator in the constructor class is set to guarantee
-	 * alphabetical order in the Map.
+	 * READER : this method load the file and transform it into a Java List.
+	 * 
+	 * 
+	 * @param nameOfDb is the name of the database file.
+	 * 
+	 * @see ReadSymptomDataFromFile()
+	 * 
+	 */
+	public void loadFile_READER(String nameOfDb) {
+
+		this.pathOfDatabase = Paths.get("Project02Eclipse\\" + nameOfDb);
+		ReadSymptomDataFromFile reader = new ReadSymptomDataFromFile(pathOfDatabase.toAbsolutePath().toString());
+		theDataFromFile = (ArrayList<String>) reader.GetSymptoms();
+
+	}
+
+	/**
+	 * SORTER : this method transform the result of the reader (a List) into a
+	 * dictionary (SORTER).
 	 * 
 	 * @return The Map representing the data of the file given.
 	 * 
 	 */
-	public Map<String, Integer> sortDataFromFile() {
-		ArrayList<String> theData = (ArrayList<String>) reader.GetSymptoms();
-		for (String s : theData) {
+	public Map<String, Integer> sortDataFromFile_SORTER() {
+
+		for (String s : theDataFromFile) {
 			if (dicoOfSymptoms.containsKey(s)) {
 				Integer newCount = dicoOfSymptoms.get(s);
 				newCount++;
@@ -125,31 +195,22 @@ public class AnalyticsCounter {
 	}
 
 	/**
-	 * This method will create a file given a name, to a given destination.
+	 * WRITER : this method write the results of the dictionary (result of SORTER)
+	 * into a result file.
 	 * 
 	 * @param nameOfFile                is the name that the clients wants to give
 	 *                                  to the output
-	 * @param nameOfExpectedDestination is the destination path that the client want
+	 * @param pathOfExpectedDestination is the destination path that the client want
 	 *                                  to store the result in
+	 * @throws IOException
 	 * 
 	 * @see ReadSymptomDataFromFile()
 	 * 
 	 */
-	public void writeDataToFile(String nameOfFile, String nameOfExpectedDestination) {
+	public void writeDataToFile_WRITER(String nameOfFile, String pathOfExpectedDestination) throws IOException {
 
-		try {
-			writer = new WritingInFile(nameOfFile, nameOfExpectedDestination);
-
-			for (Map.Entry<String, Integer> kv : this.getDicoOfSymptoms().entrySet()) {
-
-				writer.Write(kv.getKey() + "=" + kv.getValue() + "\n");
-			}
-			writer.close();
-
-		} catch (IOException e1) {
-			System.out.println("Issue with the writing of the file !");
-			e1.printStackTrace();
-		}
+		WritingInFile writer = new WritingInFile(nameOfFile, pathOfExpectedDestination);
+		writer.start(this.dicoOfSymptoms);
 
 	}
 

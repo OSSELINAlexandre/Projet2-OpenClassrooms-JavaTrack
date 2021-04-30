@@ -2,6 +2,7 @@ package com.hemebiotech.analytics;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * 
@@ -11,7 +12,7 @@ import java.io.IOException;
  * can be. F
  * 
  * @author Alexandre OSSELIN
- * @version 1.4.3
+ * @version 1.4.4
  */
 
 public class WritingInFile {
@@ -33,30 +34,6 @@ public class WritingInFile {
 		currentFileName = nameOfFile;
 		wantedDestination = expectedDestination;
 		writer = new FileWriter(wantedDestination + currentFileName);
-
-	}
-
-	/**
-	 * Write in the file.
-	 * 
-	 * @throws IOException
-	 * 
-	 */
-	public void Write(String Message) throws IOException {
-
-		writer.write(Message);
-
-	}
-
-	/**
-	 * Close the file.
-	 * 
-	 * @throws IOException
-	 * 
-	 */
-	public void close() throws IOException {
-
-		writer.close();
 
 	}
 
@@ -106,6 +83,17 @@ public class WritingInFile {
 	 */
 	public void setCurrentFileName(String currentFileName) {
 		this.currentFileName = currentFileName;
+	}
+
+	public void start(Map<String, Integer> map) throws IOException {
+
+		for (Map.Entry<String, Integer> kv : map.entrySet()) {
+
+			this.writer.write(kv.getKey() + "=" + kv.getValue() + "\n");
+		}
+
+		this.writer.close();
+
 	}
 
 }
