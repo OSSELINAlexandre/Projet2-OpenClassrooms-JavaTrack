@@ -17,7 +17,6 @@ import java.util.Map;
 
 public class WritingInFile {
 
-	public FileWriter writer;
 	public String wantedDestination;
 	public String currentFileName;
 
@@ -33,24 +32,7 @@ public class WritingInFile {
 
 		this.currentFileName = nameOfFile;
 		this.wantedDestination = expectedDestination;
-		this.writer = new FileWriter(this.wantedDestination + this.currentFileName);
 
-	}
-
-	/**
-	 * Getter of Writer
-	 * 
-	 * @return the Object that Write
-	 */
-	public FileWriter getWriter() {
-		return this.writer;
-	}
-
-	/**
-	 * Setter of Writer
-	 */
-	public void setWriter(FileWriter writer) {
-		this.writer = writer;
 	}
 
 	/**
@@ -87,12 +69,14 @@ public class WritingInFile {
 
 	public void start(Map<String, Integer> map) throws IOException {
 
+		FileWriter writer = new FileWriter(this.wantedDestination + this.currentFileName);
+
 		for (Map.Entry<String, Integer> kv : map.entrySet()) {
 
-			this.writer.write(kv.getKey() + "=" + kv.getValue() + "\n");
+			writer.write(kv.getKey() + "=" + kv.getValue() + "\n");
 		}
 
-		this.writer.close();
+		writer.close();
 
 	}
 
