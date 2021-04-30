@@ -31,9 +31,9 @@ public class WritingInFile {
 	public WritingInFile(String nameOfFile, String expectedDestination) throws IOException {
 		super();
 
-		currentFileName = nameOfFile;
-		wantedDestination = expectedDestination;
-		writer = new FileWriter(wantedDestination + currentFileName);
+		this.currentFileName = nameOfFile;
+		this.wantedDestination = expectedDestination;
+		this.writer = new FileWriter(this.wantedDestination + this.currentFileName);
 
 	}
 
@@ -43,7 +43,7 @@ public class WritingInFile {
 	 * @return the Object that Write
 	 */
 	public FileWriter getWriter() {
-		return writer;
+		return this.writer;
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class WritingInFile {
 	 * @return the String showing the Path of the result file
 	 */
 	public String getWantedDestination() {
-		return wantedDestination;
+		return this.wantedDestination;
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class WritingInFile {
 	 * @return the name of the result file.
 	 */
 	public String getCurrentFileName() {
-		return currentFileName;
+		return this.currentFileName;
 	}
 
 	/**

@@ -6,8 +6,10 @@ import java.nio.file.Paths;
 /**
  * Main class to launch the application.
  * 
- * Set the name of the DB in loadFile() Then, call the sortDataFromFile()
- * Finally, choose a name of output and a destination Path in writeDataToFile();
+ * First, create an instance of AnalyticsCounter Then, call start([A],[B]) with
+ * String A the name of your database file with the '.txt' extension and String
+ * B the name of the output file you desire.
+ * 
  * 
  * @see ReadSymptomDataFromFile
  * @see AnalyticsCounter
