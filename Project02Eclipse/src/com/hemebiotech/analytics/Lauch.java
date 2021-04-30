@@ -15,7 +15,7 @@ import java.nio.file.Paths;
  * @see AnalyticsCounter
  * 
  * @author Alexandre OSSELIN
- * @version 1.4.4
+ * @version 1.4.5
  */
 
 public class Lauch {
