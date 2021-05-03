@@ -1,18 +1,10 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeMap;
 
 /**
@@ -21,7 +13,7 @@ import java.util.TreeMap;
  * @see ReadSymptomDataFromFile
  * 
  * @author Alexandre OSSELIN
- * @version 1.4.6
+ * @version 1.4.7
  */
 
 public class AnalyticsCounter {
@@ -60,9 +52,9 @@ public class AnalyticsCounter {
 	 * First the READER | Second the SORTER | Third the WRITER
 	 * 
 	 * 
-	 * @see loadFile_READER()
-	 * @see sortDataFromFile_SORTER()
-	 * @see writeDataToFile_WRITER();
+	 * @see loadFileReader()
+	 * @see sortDataFromFileSorter()
+	 * @see writeDataToFileWriter();
 	 * 
 	 * 
 	 * @param the name of the database where the information is saved
@@ -70,9 +62,9 @@ public class AnalyticsCounter {
 	 * 
 	 */
 	public void start(String dataBaseNameFile, String resultFileName) {
-		this.loadFile_READER(dataBaseNameFile);
-		this.sortDataFromFile_SORTER();
-		this.writeDataToFile_WRITER(resultFileName, "Project02Eclipse\\src\\com\\hemebiotech\\analytics\\");
+		this.loadFileReader(dataBaseNameFile);
+		this.sortDataFromFileSorter();
+		this.writeDataToFileWriter(resultFileName, "Project02Eclipse\\src\\com\\hemebiotech\\analytics\\");
 
 	}
 
@@ -85,7 +77,7 @@ public class AnalyticsCounter {
 	 * @see ReadSymptomDataFromFile()
 	 * 
 	 */
-	private void loadFile_READER(String nameOfDb) {
+	private void loadFileReader(String nameOfDb) {
 
 		Path pathOfDatabase = Paths.get("Project02Eclipse\\" + nameOfDb);
 		ReadSymptomDataFromFile reader = new ReadSymptomDataFromFile(pathOfDatabase.toAbsolutePath().toString());
@@ -100,7 +92,7 @@ public class AnalyticsCounter {
 	 * @return The Map representing the data of the file given.
 	 * 
 	 */
-	private Map<String, Integer> sortDataFromFile_SORTER() {
+	private Map<String, Integer> sortDataFromFileSorter() {
 
 		for (String s : this.theDataFromFile) {
 			if (this.dicoOfSymptoms.containsKey(s)) {
@@ -126,10 +118,10 @@ public class AnalyticsCounter {
 	 * @see ReadSymptomDataFromFile()
 	 * 
 	 */
-	private void writeDataToFile_WRITER(String nameOfFile, String pathOfExpectedDestination) {
+	private void writeDataToFileWriter(String nameOfFile, String pathOfExpectedDestination) {
 
 		WritingInFile writer = new WritingInFile(nameOfFile, pathOfExpectedDestination);
-		writer.start(this.dicoOfSymptoms);
+		writer.writeSymptom(this.dicoOfSymptoms);
 
 	}
 

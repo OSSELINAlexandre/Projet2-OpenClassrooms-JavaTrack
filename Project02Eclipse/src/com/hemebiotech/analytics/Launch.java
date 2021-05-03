@@ -1,8 +1,5 @@
 package com.hemebiotech.analytics;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 /**
  * Main class to launch the application.
  * 
@@ -15,10 +12,10 @@ import java.nio.file.Paths;
  * @see AnalyticsCounter
  * 
  * @author Alexandre OSSELIN
- * @version 1.4.6
+ * @version 1.4.7
  */
 
-public class Lauch {
+public class Launch {
 
 	public static void main(String args[]) throws Exception {
 
