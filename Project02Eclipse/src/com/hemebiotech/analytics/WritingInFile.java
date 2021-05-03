@@ -12,10 +12,10 @@ import java.util.Map;
  * can be.
  * 
  * @author Alexandre OSSELIN
- * @version 1.4.6
+ * @version 1.4.7
  */
 
-public class WritingInFile {
+public class WritingInFile implements ISymptomWriter {
 
 	private String wantedDestination;
 	private String currentFileName;
@@ -36,10 +36,12 @@ public class WritingInFile {
 	 * Start the Writer
 	 * 
 	 * We instantiated the FileWriter class here.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 * 
 	 */
-	public void start(Map<String, Integer> map) {
+	@Override
+	public void writeSymptom(Map<String, Integer> map) {
 
 		FileWriter writer = null;
 		try {
@@ -50,18 +52,18 @@ public class WritingInFile {
 				writer.write(kv.getKey() + "=" + kv.getValue() + "\n");
 			}
 
-			writer.close();
-
 		} catch (Exception e) {
 
 			System.out.println(
 					"Couldn't write an entry of the dictionary into the file results in class in the WRITER method");
-		}finally {
-			
-			try {
-				writer.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+		} finally {
+
+			if (writer != null) {
+				try {
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
